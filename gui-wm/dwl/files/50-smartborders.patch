@@ -11,22 +11,9 @@ Co-authored-by: A Frederick Christensen <dwl@ivories.org>
 Co-authored-by: Andrey Proskurin <andreyproskurin@protonmail.com>
 Signed-off-by: Leonardo Hernández Hernández <leohdz172@proton.me>
 ---
- config.def.h |  1 +
  dwl.c        | 48 ++++++++++++++++++++++++++++++++----------------
  2 files changed, 33 insertions(+), 16 deletions(-)
 
-diff --git a/config.def.h b/config.def.h
-index a784eb4f..c9cff440 100644
---- a/config.def.h
-+++ b/config.def.h
-@@ -6,6 +6,7 @@
- /* appearance */
- static const int sloppyfocus               = 1;  /* focus follows mouse */
- static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will disable idle tracking even if it's surface isn't visible  */
-+static const int smartborders              = 1;
- static const unsigned int borderpx         = 1;  /* border pixel of windows */
- static const float rootcolor[]             = COLOR(0x222222ff);
- static const float bordercolor[]           = COLOR(0x444444ff);
 diff --git a/dwl.c b/dwl.c
 index 6f041a0d..b91134fd 100644
 --- a/dwl.c
