@@ -24,12 +24,12 @@ SLOT="0"
 IUSE="X"
 
 PATCHES=(
-	"${FILESDIR}/00-bar-0.7.patch"
+	"${FILESDIR}/00-bar.patch"
 	"${FILESDIR}/40-kblayout.patch"
 	"${FILESDIR}/50-smartborders.patch"
 	"${FILESDIR}/50-en-keycodes.patch"
 	"${FILESDIR}/50-pertag.patch"
-	"${FILESDIR}/50-tablet-input-0.7.patch"
+	"${FILESDIR}/50-tablet-input.patch"
 	"${FILESDIR}/50-regions.patch"
 )
 
@@ -42,6 +42,8 @@ else
 fi
 
 COMMON_DEPEND+="
+	x11-libs/pixman
+	media-libs/fcft
 	dev-libs/libinput:=
 	dev-libs/wayland
 	x11-libs/libxkbcommon
