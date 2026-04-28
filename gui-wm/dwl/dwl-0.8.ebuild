@@ -34,15 +34,9 @@ PATCHES=(
 	"${FILESDIR}/50-regions.patch"
 )
 
-if [[ ${PV} == 9999 ]]; then
-	COMMON_DEPEND="~gui-libs/wlroots-9999:=[libinput,session,X?]"
-else
-	COMMON_DEPEND="
-		>=gui-libs/wlroots-0.18:=[libinput,session,X?]
-		<gui-libs/wlroots-0.19:="
-fi
-
-COMMON_DEPEND+="
+# both v0.8 and main branches use 0.19, but there is some work on 0.20 in wlroots-next branch
+COMMON_DEPEND="
+	gui-libs/wlroots:0.19=
 	x11-libs/pixman
 	media-libs/fcft
 	dev-libs/libinput:=
