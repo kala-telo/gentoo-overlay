@@ -25,6 +25,7 @@ IUSE="X"
 
 PATCHES=(
 	"${FILESDIR}/00-bar.patch"
+	"${FILESDIR}/00-config.patch"
 	"${FILESDIR}/40-kblayout.patch"
 	"${FILESDIR}/50-smartborders.patch"
 	"${FILESDIR}/50-en-keycodes.patch"

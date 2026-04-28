@@ -36,12 +36,10 @@ index 6f041a0d..b91134fd 100644
  		if (c->mon == m)
  			setmon(c, selmon, c->tags);
  	}
-@@ -770,8 +770,12 @@ commitnotify(struct wl_listener *listener, void *data)
- {
- 	Client *c = wl_container_of(listener, c, commit);
- 
--	if (client_surface(c)->mapped && c->mon)
--		resize(c, c->geom, (c->isfloating && !c->isfullscreen));
+@@ -770,6 +770,11 @@ commitnotify(struct wl_listener *listener, void *data)
+ 	}
+
+-	resize(c, c->geom, (c->isfloating && !c->isfullscreen));
 +	if (client_surface(c)->mapped && c->mon) {
 +		if (c->mon->lt[c->mon->sellt]->arrange && !c->isfullscreen && !c->isfloating)
 +			c->mon->lt[c->mon->sellt]->arrange(c->mon);
@@ -120,7 +118,7 @@ index 6f041a0d..b91134fd 100644
 @@ -2266,6 +2273,12 @@ setlayout(const Arg *arg)
  	if (arg && arg->v)
  		selmon->lt[selmon->sellt] = (Layout *)arg->v;
- 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, LENGTH(selmon->ltsymbol));
+ 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof(selmon->ltsymbol));
 +	if (!selmon->lt[selmon->sellt]->arrange) {
 +		/* floating layout, draw borders around all clients */
 +		Client *c;
@@ -181,12 +179,9 @@ index 6f041a0d..b91134fd 100644
  
  		/* Try to re-set the gamma LUT when updating monitors,
  		 * it's only really needed when enabling a disabled output, but meh. */
-@@ -2981,7 +2997,7 @@ configurex11(struct wl_listener *listener, void *data)
- 	}
- 	if (c->isfloating || client_is_unmanaged(c))
- 		resize(c, (struct wlr_box){.x = event->x, .y = event->y,
--				.width = event->width + c->bw * 2, .height = event->height + c->bw * 2}, 0);
-+				.width = event->width + c->bw * 2, .height = event->height + c->bw * 2}, 0, 1);
- 	else
+@@ -2981,4 +2997,4 @@ configurex11(struct wl_listener *listener, void *data)
+ 		resize(c, (struct wlr_box){.x = event->x - c->bw,
+-				.y = event->y - c->bw, .width = event->width + c->bw * 2,
++				.height = event->height + c->bw * 2}, 0, 1);
+ 	} else {
  		arrange(c->mon);
- }

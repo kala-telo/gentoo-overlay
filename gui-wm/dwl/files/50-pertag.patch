@@ -79,7 +79,7 @@ index 145fd01..2f364bc 100644
  	arrange(selmon);
  }
  
-@@ -2305,9 +2328,9 @@ setlayout(const Arg *arg)
+@@ -2305,7 +2328,7 @@ setlayout(const Arg *arg)
  	if (!selmon)
  		return;
  	if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt])
@@ -88,9 +88,7 @@ index 145fd01..2f364bc 100644
  	if (arg && arg->v)
 -		selmon->lt[selmon->sellt] = (Layout *)arg->v;
 +		selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
- 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, LENGTH(selmon->ltsymbol));
- 	arrange(selmon);
- 	printstatus();
+ 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof(selmon->ltsymbol));
 @@ -2324,7 +2347,7 @@ setmfact(const Arg *arg)
  	f = arg->f < 1.0f ? arg->f + selmon->mfact : arg->f - 1.0f;
  	if (f < 0.1 || f > 0.9)

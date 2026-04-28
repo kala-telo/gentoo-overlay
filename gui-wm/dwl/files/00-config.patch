@@ -2,7 +2,7 @@ diff --git a/config.def.h b/config.def.h
 index 8a6eda0..811b858 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -4,27 +4,42 @@
+@@ -4,27 +4,44 @@
                          ((hex >> 8) & 0xFF) / 255.0f, \
                          (hex & 0xFF) / 255.0f }
  /* appearance */
@@ -22,6 +22,8 @@ index 8a6eda0..811b858 100644
  /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
 -static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
 +static const float fullscreen_bg[]         = {0.1f, 0.1f, 0.1f, 1.0f}; /* You can also use glsl colors */
++/* Pen active area: value 0.0 => 1.0         { x,    y,    width, height } */
++static const double tablet_area[4]            = { 0.4,  0.4,  0.4,   0.4 };
 +
 +static uint32_t colors[][3]                = {
 +	/*               fg          bg          border    */
@@ -98,7 +100,7 @@ index 8a6eda0..811b858 100644
  
  #define TAGKEYS(KEY,SKEY,TAG) \
  	{ MODKEY,                    KEY,            view,            {.ui = 1 << TAG} }, \
-@@ -116,57 +137,82 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
+@@ -116,57 +137,98 @@ static const enum libinput_config_tap_button_map button_map = LIBINPUT_CONFIG_TA
  
  /* commands */
  static const char *termcmd[] = { "foot", NULL };
@@ -221,3 +223,19 @@ index 8a6eda0..811b858 100644
 +	{ ClkTagBar,   MODKEY, BTN_LEFT,   tag,            {0} },
 +	{ ClkTagBar,   MODKEY, BTN_RIGHT,  toggletag,      {0} },
  };
++
++static const TabletButton tabletbuttons[] = {
++    /* button       state                  function    argument */
++/*  { BTN_STYLUS,   WLR_BUTTON_PRESSED,    spawn,      {.v = termcmd} }, */
++/*  { BTN_STYLUS2,  WLR_BUTTON_PRESSED,    killclient, {0} }, */
++  { 0,            0,                     NULL,       {0} }
++};
++
++static const TabletPadButton tabletpadbuttons[] = {
++  /* button  state                  function          argument */
++/*  { 0,       WLR_BUTTON_PRESSED,    spawn,            {.v = termcmd} }, */
++/*  { 1,       WLR_BUTTON_PRESSED,    killclient,       {0} },*/
++/*  { 2,       WLR_BUTTON_PRESSED,    togglefloating,   {0} },*/
++/*  { 3,       WLR_BUTTON_PRESSED,    zoom,             {0} },*/
++  { 0,            0,                     NULL,       {0} }
++};
