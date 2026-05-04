@@ -179,9 +179,9 @@ index 0000000..21afd21
 +{
 +	Img *image;
 +	pixman_region32_t clip;
-+
++	pixman_format_code_t pixman_fmt = *(char*)&(int){1} ? PIXMAN_a8r8g8b8 : PIXMAN_b8g8r8a8;
 +	image = pixman_image_create_bits_no_clear(
-+		PIXMAN_a8r8g8b8, w, h, bits, w * 4);
++		pixman_fmt, w, h, bits, w * 4);
 +	if (!image)
 +		return NULL;
 +	pixman_region32_init_rect(&clip, 0, 0, w, h);
