@@ -36,7 +36,7 @@ PATCHES=(
 
 # both v0.8 and main branches use 0.19, but there is some work on 0.20 in wlroots-next branch
 COMMON_DEPEND="
-	gui-libs/wlroots:0.19=
+	gui-libs/wlroots:0.19=[libinput,session,X?]
 	x11-libs/pixman
 	media-libs/fcft
 	dev-libs/libinput:=
