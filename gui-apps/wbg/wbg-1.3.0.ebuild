@@ -22,6 +22,9 @@ LICENSE="MIT ZLIB"
 SLOT="0"
 IUSE="png jpeg webp"
 
+PATCHES=(
+	"${FILESDIR}/be.patch"
+)
 RDEPEND="
 	dev-libs/wayland
 	x11-libs/pixman

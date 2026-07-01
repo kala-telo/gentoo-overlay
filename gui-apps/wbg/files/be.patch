@@ -1,0 +1,93 @@
+diff --git a/colors.h b/colors.h
+new file mode 100644
+index 0000000..36d4c83
+--- /dev/null
++++ b/colors.h
+@@ -0,0 +1,2 @@
++#define RGB888   (*(char*)&(int){1} ? PIXMAN_r8g8b8 : PIXMAN_b8g8r8)
++#define XRGB8888 (*(char*)&(int){1} ? PIXMAN_x8r8g8b8 : PIXMAN_b8g8r8x8)
+diff --git a/png.c b/png.c
+index a304470..1ac3dc0 100644
+--- a/png.c
++++ b/png.c
+@@ -15,6 +15,7 @@
+ #define LOG_ENABLE_DBG 0
+ #include "log.h"
+ #include "stride.h"
++#include "colors.h"
+ 
+ pixman_image_t *
+ png_load(FILE *fp, const char *path)
+@@ -84,7 +85,7 @@ png_load(FILE *fp, const char *path)
+             png_set_expand_gray_1_2_4_to_8(png_ptr);
+ 
+         png_set_gray_to_rgb(png_ptr);
+-        format = color_type == PNG_COLOR_TYPE_GRAY ? PIXMAN_r8g8b8 : PIXMAN_x8r8g8b8;
++        format = color_type == PNG_COLOR_TYPE_GRAY ? RGB888 : XRGB8888;
+         break;
+ 
+     case PNG_COLOR_TYPE_PALETTE:
+@@ -94,19 +95,19 @@ png_load(FILE *fp, const char *path)
+         png_set_palette_to_rgb(png_ptr);
+         if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS)) {
+             png_set_tRNS_to_alpha(png_ptr);
+-            format = PIXMAN_x8r8g8b8;
++            format = XRGB8888;
+         } else
+-            format = PIXMAN_r8g8b8;
++            format = RGB888;
+         break;
+ 
+     case PNG_COLOR_TYPE_RGB:
+         LOG_DBG("RGB");
+-        format = PIXMAN_r8g8b8;
++        format = RGB888;
+         break;
+ 
+     case PNG_COLOR_TYPE_RGBA:
+         LOG_DBG("RGBA");
+-        format = PIXMAN_x8r8g8b8;
++        format = XRGB8888;
+         break;
+     }
+ 
+@@ -129,7 +130,7 @@ png_load(FILE *fp, const char *path)
+     png_read_image(png_ptr, row_pointers);
+ 
+     /* pixman expects pre-multiplied alpha */
+-    if (format == PIXMAN_x8r8g8b8) {
++    if (format == XRGB8888) {
+         for (int i = 0; i < height; i++) {
+             uint32_t *p = (uint32_t *)row_pointers[i];
+             for (int j = 0; j < width; j++, p++) {
+diff --git a/shm.c b/shm.c
+index c0fe0bc..944d551 100644
+--- a/shm.c
++++ b/shm.c
+@@ -14,6 +14,7 @@
+ #define LOG_MODULE "shm"
+ #include "log.h"
+ #include "stride.h"
++#include "colors.h"
+ 
+ #if !defined(MAP_UNINITIALIZED)
+  #define MAP_UNINITIALIZED 0
+@@ -84,7 +85,7 @@ shm_get_buffer(struct wl_shm *shm, int width, int height, unsigned long cookie)
+     }
+ 
+     /* Total size */
+-    const uint32_t stride = stride_for_format_and_width(PIXMAN_x8r8g8b8, width);
++    const uint32_t stride = stride_for_format_and_width(XRGB8888, width);
+     size = stride * height;
+     if (ftruncate(pool_fd, size) == -1) {
+         LOG_ERRNO("failed to truncate SHM pool");
+@@ -123,8 +124,7 @@ shm_get_buffer(struct wl_shm *shm, int width, int height, unsigned long cookie)
+     wl_shm_pool_destroy(pool); pool = NULL;
+     close(pool_fd); pool_fd = -1;
+ 
+-    pix = pixman_image_create_bits_no_clear(
+-        PIXMAN_x8r8g8b8, width, height, mmapped, stride);
++    pix = pixman_image_create_bits_no_clear(XRGB8888, width, height, mmapped, stride);
+     if (pix == NULL) {
+         LOG_ERR("failed to create pixman image");
+         goto err;
