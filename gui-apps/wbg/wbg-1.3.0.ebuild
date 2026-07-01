@@ -18,9 +18,10 @@ DESCRIPTION="Super simple wallpaper application"
 HOMEPAGE="https://codeberg.org/dnkl/wbg"
 
 # ZLIB for nanosvg
-LICENSE="MIT ZLIB"
+LICENSE="MIT svg? ( ZLIB )"
 SLOT="0"
-IUSE="png jpeg webp"
+IUSE="png svg jpeg webp"
+REQUIRED_USE="|| ( png svg jpeg webp )"
 
 PATCHES=(
 	"${FILESDIR}/be.patch"
@@ -47,7 +48,7 @@ src_configure() {
 		$(meson_feature png)
 		$(meson_feature jpeg)
 		$(meson_feature webp)
-		-Dsvg=true
+		$(meson_use svg)
 	)
 
 	meson_src_configure
