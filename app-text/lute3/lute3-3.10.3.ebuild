@@ -26,7 +26,6 @@ DEPEND="
 	>=dev-python/jaconv-0.3.4[${PYTHON_USEDEP}]
 	<dev-python/jaconv-1[${PYTHON_USEDEP}]
 	>=dev-python/platformdirs-3.10.0[${PYTHON_USEDEP}]
-	<dev-python/platformdirs-4[${PYTHON_USEDEP}]
 	>=dev-python/requests-2.31.0[${PYTHON_USEDEP}]
 	<dev-python/requests-3[${PYTHON_USEDEP}]
 	>=dev-python/beautifulsoup4-4.12.2[${PYTHON_USEDEP}]
