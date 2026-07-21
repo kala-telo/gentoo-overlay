@@ -45,3 +45,8 @@ DEPEND="
 "
 
 RDEPEND="${DEPEND}"
+
+src_prepare() {
+	distutils-r1_src_prepare
+	cp lute/config/config.yml.prod lute/config/config.yml || die
+}
