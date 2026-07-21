@@ -20,3 +20,9 @@ DEPEND="
 	app-text/mecab
 	app-dicts/mecab-ipadic
 "
+RDEPEND="${DEPEND}"
+
+src_prepare() {
+	distutils-r1_src_prepare
+	sed -i "/, 'tests'/d" setup.py || die
+}
