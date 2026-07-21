@@ -11,7 +11,7 @@ inherit distutils-r1 pypi
 
 DESCRIPTION="Learning Using Texts"
 
-HOMEPAGE=""
+HOMEPAGE="https://luteorg.github.io/lute-manual/ https://github.com/LuteOrg/lute-v3"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
