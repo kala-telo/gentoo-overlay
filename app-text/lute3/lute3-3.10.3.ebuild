@@ -18,8 +18,6 @@ KEYWORDS="~amd64"
 
 IUSE="japanese"
 
->=dev-python/openepub-0.0.9[${PYTHON_USEDEP}]
-
 DEPEND="
 	>=dev-python/flask-sqlalchemy-3.1.1[${PYTHON_USEDEP}]
 	<dev-python/flask-sqlalchemy-4[${PYTHON_USEDEP}]
