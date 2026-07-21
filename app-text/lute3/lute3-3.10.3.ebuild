@@ -40,9 +40,8 @@ DEPEND="
 	>=dev-python/pypdf-3.17.4[${PYTHON_USEDEP}]
 	>=dev-python/subtitle-parser-1.3.0[${PYTHON_USEDEP}]
 	>=dev-python/ahocorapy-1.6.2[${PYTHON_USEDEP}]
-
-	japanese? ( >=dev-python/natto-py-1.0.1[${PYTHON_USEDEP}] )
-	japanese? ( <dev-python/natto-py-2[${PYTHON_USEDEP}] )
+	>=dev-python/natto-py-1.0.1[${PYTHON_USEDEP}]
+	<dev-python/natto-py-2[${PYTHON_USEDEP}]
 "
 
 RDEPEND="${DEPEND}"
