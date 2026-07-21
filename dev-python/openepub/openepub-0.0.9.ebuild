@@ -18,7 +18,6 @@ KEYWORDS="~amd64"
 
 DEPEND="
 	>=dev-python/xmltodict-0.13.0[${PYTHON_USEDEP}]
-	<dev-python/xmltodict-1[${PYTHON_USEDEP}]
 	>=dev-python/beautifulsoup4-4.12.2[${PYTHON_USEDEP}]
 	<dev-python/beautifulsoup4-5[${PYTHON_USEDEP}]
 "
