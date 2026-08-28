@@ -9,9 +9,9 @@ if [[ ${PV} == *9999* ]]; then
 	EGIT_REPO_URI="https://codeberg.org/dnkl/wbg.git"
 	inherit git-r3
 else
-	SRC_URI="https://codeberg.org/dnkl/wbg/archive/${PV}.tar.gz  -> ${P}.tar.gz"
+	SRC_URI="https://codeberg.org/dnkl/wbg/releases/download/${PV}/${P}.tar.gz  -> ${P}.tar.gz"
 	KEYWORDS="~amd64 ~ppc"
-	S="${WORKDIR}/${PN}"
+	S="${WORKDIR}/${P}"
 fi
 
 DESCRIPTION="Super simple wallpaper application"
