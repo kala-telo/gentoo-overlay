@@ -23,17 +23,6 @@ LICENSE="CC0-1.0 GPL-3+ MIT"
 SLOT="0"
 IUSE="X"
 
-PATCHES=(
-	"${FILESDIR}/00-bar.patch"
-	"${FILESDIR}/00-config.patch"
-	"${FILESDIR}/40-kblayout.patch"
-	"${FILESDIR}/50-smartborders.patch"
-	"${FILESDIR}/50-en-keycodes.patch"
-	"${FILESDIR}/50-pertag.patch"
-	"${FILESDIR}/50-tablet-input.patch"
-	"${FILESDIR}/50-regions.patch"
-)
-
 # both v0.8 and main branches use 0.19, but there is some work on 0.20 in wlroots-next branch
 COMMON_DEPEND="
 	gui-libs/wlroots:0.19=[libinput,session,X?]

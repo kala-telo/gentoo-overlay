@@ -46,9 +46,9 @@ index 6f041a0d..b91134fd 100644
 +		else
 +			resize(c, c->geom, (c->isfloating && !c->isfullscreen), (c->isfloating && !c->isfullscreen));
 +	}
+ }
  
- 	/* mark a pending resize as completed */
- 	if (c->resize && c->resize <= c->surface.xdg->current.configure_serial)
+ void
 @@ -1717,7 +1721,7 @@ monocle(Monitor *m)
  	wl_list_for_each(c, &clients, link) {
  		if (!VISIBLEON(c, m) || c->isfloating || c->isfullscreen)
@@ -59,9 +59,9 @@ index 6f041a0d..b91134fd 100644
  	}
  	if (n)
 @@ -1797,10 +1801,10 @@ motionnotify(uint32_t time, struct wlr_input_device *device, double dx, double d
- 	if (cursor_mode == CurMove) {
- 		/* Move the grabbed client to the new position. */
- 		resize(grabc, (struct wlr_box){.x = (int)round(cursor->x) - grabcx, .y = (int)round(cursor->y) - grabcy,
+ 		else if (abs((selmon->w.y + selmon->w.height) - (ny + grabc->geom.height)) < (int)snap)
+ 			ny = selmon->w.y + selmon->w.height - grabc->geom.height;
+ 		resize(grabc, (struct wlr_box){.x = nx, .y = ny,
 -			.width = grabc->geom.width, .height = grabc->geom.height}, 1);
 +			.width = grabc->geom.width, .height = grabc->geom.height}, 1, 1);
  		return;

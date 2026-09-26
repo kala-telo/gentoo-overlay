@@ -19,10 +19,9 @@ index 44f3ad9..279571b 100644
  #include <wlr/render/allocator.h>
  #include <wlr/render/wlr_renderer.h>
  #include <wlr/types/wlr_alpha_modifier_v1.h>
-@@ -139,6 +140,7 @@ typedef struct {
+@@ -139,5 +140,6 @@ typedef struct {
  	uint32_t tags;
  	int isfloating, isurgent, isfullscreen;
- 	uint32_t resize; /* configure serial of a pending resize */
 +	unsigned int kblayout_idx;
  } Client;
  
@@ -32,7 +31,7 @@ index 44f3ad9..279571b 100644
  static void incnmaster(const Arg *arg);
  static void inputdevice(struct wl_listener *listener, void *data);
 +static void kblayout(KeyboardGroup *kb);
- static int keybinding(uint32_t mods, xkb_keysym_t sym);
+ static const Key *keybinding(uint32_t mods, xkb_keysym_t sym);
  static void keypress(struct wl_listener *listener, void *data);
  static void keypressmod(struct wl_listener *listener, void *data);
 @@ -436,6 +439,8 @@ static struct wl_listener request_start_drag = {.notify = requeststartdrag};
@@ -122,6 +121,13 @@ index 44f3ad9..279571b 100644
  
  	/* Activate the new client */
  	client_activate_surface(client_surface(c), 1);
+@@ -2082,4 +2082,6 @@ keypressmod(struct wl_listener *listener, void *data)
+ 	/* Send modifiers to the client. */
+ 	wlr_seat_keyboard_notify_modifiers(seat,
+ 			&group->wlr_group->keyboard.modifiers);
++
++	kblayout(group);
+ }
 @@ -1605,6 +1642,36 @@ inputdevice(struct wl_listener *listener, void *data)
  	wlr_seat_set_capabilities(seat, caps);
  }
@@ -159,15 +165,6 @@ index 44f3ad9..279571b 100644
  int
  keybinding(uint32_t mods, xkb_keysym_t sym)
  {
-@@ -1683,6 +1750,8 @@ keypressmod(struct wl_listener *listener, void *data)
- 	/* Send modifiers to the client. */
- 	wlr_seat_keyboard_notify_modifiers(seat,
- 			&group->wlr_group->keyboard.modifiers);
-+
-+	kblayout(group);
- }
- 
- int
 -- 
 2.53.0
 
