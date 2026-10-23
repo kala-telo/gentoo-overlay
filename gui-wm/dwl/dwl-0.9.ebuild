@@ -31,6 +31,7 @@ PATCHES=(
 	"${FILESDIR}/50-pertag.patch"
 	"${FILESDIR}/50-tablet-input.patch"
 	"${FILESDIR}/50-regions.patch"
+	"${FILESDIR}/50-en-keycodes.patch"
 )
 
 COMMON_DEPEND="
